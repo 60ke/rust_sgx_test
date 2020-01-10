@@ -1,0 +1,25 @@
+enclave {
+    from "sgx_backtrace.edl" import *;
+    from "sgx_tstd.edl" import *;
+    from "sgx_stdio.edl" import *;
+    from "sgx_fs.edl" import *;
+    from "sgx_net.edl" import *;
+    from "sgx_time.edl" import *;
+    from "sgx_tstdc.edl" import *;
+
+    include "sgx_quote.h"
+    trusted {
+        /* define ECALLs here. */
+
+        public sgx_status_t say_something([in, size=len] const uint8_t* some_string, size_t len);
+    };
+    untrusted {
+       // sgx_status_t ocall_get_service([in, size=storage_key_len] const uint8_t* storage_key,
+       // [out, size=storage_value_len] uint8_t* storage_value_len);
+      //sgx_status_t ocall_get_service([in] sgx_spid_t *p_spid); 
+        sgx_status_t ocall_get_service([in, count=output_len]  uint8_t* output, uint32_t output_len);
+        void ocall_get_quote([in, size = key_len] uint8_t * key,uint32_t key_len,[out,size = value_len] uint8_t* value,uint32_t value_len);        
+
+
+    };
+};
