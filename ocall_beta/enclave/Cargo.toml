@@ -1,0 +1,20 @@
+[package]
+name = "Helloworldsampleenclave"
+version = "1.0.0"
+authors = ["Baidu"]
+
+[lib]
+name = "helloworldsampleenclave"
+crate-type = ["staticlib"]
+
+[features]
+default = []
+
+[dependencies]
+http_req = { git = "https://github.com/mesalock-linux/http_req-sgx", branch = "master" }
+# sgx_tstd = { git = "https://github.com/apache/teaclave-sgx-sdk.git",  features = ["net"] }
+rustc-hex = { version = "2.0", default-features = false }
+etcommon-hexutil = { version = "0.2", default-features = false }
+[target.'cfg(not(target_env = "sgx"))'.dependencies]
+sgx_types = {git = "https://github.com/apache/teaclave-sgx-sdk.git" }
+sgx_tstd = {rev = "v1.1.0",  git = "https://github.com/apache/teaclave-sgx-sdk.git",features = ["net"]}

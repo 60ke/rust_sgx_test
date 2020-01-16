@@ -1,0 +1,16 @@
+enclave {
+    from "sgx_tstd.edl" import *;
+    from "sgx_stdio.edl" import *;
+    from "sgx_backtrace.edl" import *;
+    from "sgx_tstdc.edl" import *;
+
+    include "sgx_quote.h"
+    trusted {
+        /* define ECALLs here. */
+
+        public sgx_status_t say_something([in, size=len] const uint8_t* some_string, size_t len);
+    };
+    untrusted {
+        void ocall_get_quote([in, size = key_len] uint8_t * key,uint32_t key_len,[out,size = 1000] uint8_t* value,[out] uint8_t* value_len);
+    };
+};
